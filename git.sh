@@ -15,3 +15,4 @@ if [ `scl -l | grep -c "sclo-git25"` -eq '0' ];then
 else
 	print "sclo-git25 already install"
 fi
+echo_eval git config --global credential.helper store
