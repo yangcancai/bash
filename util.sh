@@ -1,4 +1,5 @@
 #!/bin/bash
+
 print()
 {
         #echo -e “\033[34m 蓝色字 \033[0m” 
@@ -25,4 +26,25 @@ cmd_exists()
 		return 0;
 	fi
 	return 1
+}
+create_dir()
+{
+	if [ ! -d $1 ]; then
+		echo_eval mkdir $1
+	else
+		print "$1 directory already exists"
+	fi
+}
+create_file()
+{
+	if [ ! -f $1 ]; then
+		touch $1
+	fi
+}
+install_normal()
+{
+	cmd_exists rz
+	if [ $? -eq 0 ]; then
+		echo_eval yum -y install lrzsz	
+	fi
 }
