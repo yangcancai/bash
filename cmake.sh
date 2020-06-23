@@ -13,11 +13,7 @@ if [ `grep -c "source /opt/rh/devtoolset-8/enable" /etc/profile` -eq '0' ];then
 else
         print "devtoolset-8 already append to /etc/profile"
 fi
-if [ `scl -l | grep -c "devtoolset-8"` -eq '0' ];then
-        echo_eval scl enable devtoolset-8 bash
-else
-        print "devtoolset-8 already install"
-fi
+echo_eval scl enable devtoolset-8 bash
 # all new shell will enbale
 ## download cmake 3.17.3
 cmd_exists wget

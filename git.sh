@@ -10,9 +10,5 @@ if [ `grep -c "source /opt/rh/sclo-git25/enable" /etc/profile` -eq '0' ];then
 else
 	print "sclo-git25 already append to /etc/profile"
 fi
-if [ `scl -l | grep -c "sclo-git25"` -eq '0' ];then
-	echo_eval scl enable sclo-git25 bash
-else
-	print "sclo-git25 already install"
-fi
+echo_eval scl enable sclo-git25 bash
 echo_eval git config --global credential.helper store
