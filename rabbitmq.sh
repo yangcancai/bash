@@ -15,7 +15,10 @@ install(){
 	rpm -iv esl-erlang_24.0.5-1~centos~7_amd64.rpm
 	wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.17/rabbitmq-server-3.8.17-1.el7.noarch.rpm
 	rpm -iv rabbitmq-server-3.8.17-1.el7.noarch.rpm
-	wget https://raw.githubusercontent.com/rabbitmq/rabbitmq-server/v3.7.x/deps/rabbit/docs/rabbitmq.config.example
+	## erlang term format
+	#wget https://raw.githubusercontent.com/rabbitmq/rabbitmq-server/v3.7.x/deps/rabbit/docs/rabbitmq.config.example
+	## sysctl format
+	wget https://raw.githubusercontent.com/rabbitmq/rabbitmq-server/v3.8.x/deps/rabbit/docs/rabbitmq.conf.example
 	wget https://raw.githubusercontent.com/rabbitmq/rabbitmq-server/master/deps/rabbit/docs/advanced.config.example
 	cp rabbitmq.config.example /etc/rabbitmq/rabbitmq.config
 	cp advanced.config.example /etc/rabbitmq/advanced.config
