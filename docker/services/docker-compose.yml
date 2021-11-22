@@ -6,6 +6,7 @@ services:
     restart: always # 自动重启（开机后也自动启动）
     network_mode: bridge  # 指定网络为桥接
     volumes:  # 挂载的目录
+      - ./tool.sh:/data/tool.sh 
       - ./data/mysql:/var/lib/mysql # 将容器中的/var/lib/mysql挂载到当前目录下的data/mysql（MySQL的数据文件，防止容器删除后数据丢失）
       - ./config/mysql:/etc/mysql/conf.d  # 挂载好配置文件的目录（没有特殊配置的时候可以不用写这行）
     ports:
@@ -29,6 +30,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
+      - ./tool.sh:/data/tool.sh 
       - ./data/redis:/data/redis
       - ./config/redis.conf:/etc/redis/redis.conf 
     command: redis-server /etc/redis/redis.conf 
