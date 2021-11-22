@@ -1,0 +1,36 @@
+version: "3"
+services:
+  mysql:    # 服务的名字
+    image: mysql:latest # 使用最新的MySQL镜像
+    container_name: dev_mysql_latest  # 指定一个容器名
+    restart: always # 自动重启（开机后也自动启动）
+    network_mode: bridge  # 指定网络为桥接
+    volumes:  # 挂载的目录
+      - ./data/mysql:/var/lib/mysql # 将容器中的/var/lib/mysql挂载到当前目录下的data/mysql（MySQL的数据文件，防止容器删除后数据丢失）
+      - ./config/mysql:/etc/mysql/conf.d  # 挂载好配置文件的目录（没有特殊配置的时候可以不用写这行）
+    ports:
+      - "3306:3306" # 将容器的3306端口映射到本地的3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456 # MySQL的root密码「必填」
+
+      # 以下皆为选填
+      - MYSQL_DATABASE=test_db  # 如指定，则在容器生成时创建该数据库
+      - MYSQL_USER=test # 新用户名
+      - MYSQL_PASSWORD=123456 # 新用户的密码
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no # 不允许使用空密码
+      - MYSQL_RANDOM_ROOT_PASSWORD=no # 不适用随机密码（为yes时会随机生成一个密码并输出到stdout上，通常是你看到的窗口）
+      - MYSQL_ONETIME_PASSWORD=onetime_passwd # 一次性密码（使用时，第一次登录会强制要求修改密码）
+
+  redis:
+    image: redis:latest
+    container_name: dev_redis_latest
+    network_mode: bridge
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data/redis
+      - ./config/redis.conf:/etc/redis/redis.conf 
+    command: redis-server /etc/redis/redis.conf 
+    # privileged: true
+    # command: redis-server --requirepass "123456"  # 指定容器运行的命令，命令处设置密码
