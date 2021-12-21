@@ -13,7 +13,10 @@ redis(){
     docker exec -it dev_redis_latest bash -c "redis-cli -a 123456" 
 }
 mysql(){
-    docker exec -it dev_mysql_latest bash -c "mysql"
+    docker exec -it dev_mysql_latest bash -c "mysql -uroot -p"
+}
+attach_mysql(){
+   docker exec -it dev_mysql_latest bash
 }
 help(){
     echo "sh tool.sh start --- start all service in background mode"
@@ -23,6 +26,7 @@ help(){
     echo "sh tool.sh mysql ---  mysql"
 }
 case $1 in
+attach_mysql) attach_mysql;;
 start) start;;
 stop) stop;;
 console) console;;

@@ -11,16 +11,17 @@ services:
       - ./config/mysql:/etc/mysql/conf.d  # 挂载好配置文件的目录（没有特殊配置的时候可以不用写这行）
     ports:
       - "3306:3306" # 将容器的3306端口映射到本地的3306
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       - MYSQL_ROOT_PASSWORD=123456 # MySQL的root密码「必填」
 
       # 以下皆为选填
-      - MYSQL_DATABASE=test_db  # 如指定，则在容器生成时创建该数据库
-      - MYSQL_USER=test # 新用户名
-      - MYSQL_PASSWORD=123456 # 新用户的密码
-      - MYSQL_ALLOW_EMPTY_PASSWORD=no # 不允许使用空密码
-      - MYSQL_RANDOM_ROOT_PASSWORD=no # 不适用随机密码（为yes时会随机生成一个密码并输出到stdout上，通常是你看到的窗口）
-      - MYSQL_ONETIME_PASSWORD=onetime_passwd # 一次性密码（使用时，第一次登录会强制要求修改密码）
+      # - MYSQL_DATABASE=im # 如指定，则在容器生成时创建该数据库
+      # - MYSQL_USER=im # 新用户名
+      # - MYSQL_PASSWORD=123456 # 新用户的密码
+      # - MYSQL_ALLOW_EMPTY_PASSWORD=no # 不允许使用空密码
+      # - MYSQL_RANDOM_ROOT_PASSWORD=no # 不适用随机密码（为yes时会随机生成一个密码并输出到stdout上，通常是你看到的窗口）
+      # - MYSQL_ONETIME_PASSWORD=onetime_passwd # 一次性密码（使用时，第一次登录会强制要求修改密码）
 
   redis:
     image: redis:latest
