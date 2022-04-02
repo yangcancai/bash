@@ -29,7 +29,7 @@ services:
     network_mode: bridge
     restart: always
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - ./tool.sh:/data/tool.sh 
       - ./data/redis:/data/redis

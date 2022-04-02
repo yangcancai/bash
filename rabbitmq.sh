@@ -2,9 +2,17 @@
 #-v "rabbitmq/etc:/etc/rabbitmq" \
 #-v "rabbitmq/lib:/var/lib/rabbitmq"\
 #-v "rabbitmq/log:/var/log/rabbitmq"\ -p 5672:5672 -p 15672:15672 rabbitmq:3-management
-
+mkdir -p rabbitmq/etc
+touch rabbitmq/etc/enabled_plugins
 start_docker(){
-	docker run -it --rm --name rabbitmq2  --mount type=bind,source=$(pwd)/rabbitmq/etc/enabled_plugins,target=/etc/rabbitmq/enabled_plugins  -v $(pwd)/rabbitmq/etc:/etc/rabbitmq -v $(pwd)/rabbitmq/lib:/var/lib/rabbitmq -v $(pwd)/rabbitmq/log:/var/log/rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+	# docker run -it --rm
+	docker run -d --rm --name rabbitmq2  --mount type=bind,source=$(pwd)/rabbitmq/etc/enabled_plugins,target=/etc/rabbitmq/enabled_plugins  -v $(pwd)/rabbitmq/etc:/etc/rabbitmq -v $(pwd)/rabbitmq/lib:/var/lib/rabbitmq -v $(pwd)/rabbitmq/log:/var/log/rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+}
+attach(){
+	docker exec -it rabbitmq2 bin/bash
+}
+stop_docker(){
+	docker stop rabbitmq2	
 }
 install(){
 	yum install socat logrotate -y
@@ -34,17 +42,20 @@ stop(){
 	rabbitmqctl shutdown
 }
 help(){
-	echo "sh tool.sh start -- start rabbitmq broker"
-	echo "sh tool.sh start_docker -- start rabbitmq docker broker"
-	echo "sh tool.sh install -- install rabbitmq-server"
-	echo "sh tool.sh uninstall -- uninstall rabbitmq-server & els-erlang"
-	echo "sh tool.sh stop -- stop rabbitmq-server"
+	echo "sh rabbitmq.sh start -- start rabbitmq broker"
+	echo "sh rabbitmq.sh start_docker -- start rabbitmq docker broker"
+	echo "sh rabbitmq.sh stop_docker -- stop rabbitmq docker broker"
+	echo "sh rabbitmq.sh install -- install rabbitmq-server"
+	echo "sh rabbitmq.sh uninstall -- uninstall rabbitmq-server & els-erlang"
+	echo "sh rabbitmq.sh stop -- stop rabbitmq-server"
 }
 case $1 in
+attach) attach;;
 install) install;;
 uninstall) uninstall;;
 start) start;;
 start_docker) start_docker;;
 stop) stop;;
+stop_docker) stop_docker;;
 *) help;;
 esac
