@@ -1,0 +1,54 @@
+[sources.im_container]
+type = "file"
+#ignore_older_secs = 600
+include = [ "/data/logs/*.json" ]
+read_from = "beginning"
+
+[transforms.generate_im_container]
+type = "remap"
+inputs = [ "im_container" ]
+source = """
+t=.timestamp
+message = parse_json!(.message)
+.timestamp, err = to_unix_timestamp(t, "milliseconds")
+.sid = message."$sid"
+.uid = message.uid
+if .uid == null{
+	.uid = 0
+}
+.ip = message."$ip"
+.meta = message.meta
+.when = message.when
+.level = message.level
+.msg = message.msg
+.msg_name = message.msg_name
+.service = message.service
+del(message."$sid")
+del(message.uid)
+del(message."$ip")
+del(message.meta)
+del(message.when)
+del(message.level)
+del(message.msg)
+del(message.msg_name)
+del(message.service)
+.body = message
+del(.message)
+del(.source_type)
+"""
+
+#[sinks.emit_syslog]
+#inputs = ["im_container"]
+#type = "console"
+#encoding.codec = "text"
+
+[sinks.emit_syslog1]
+inputs = ["generate_im_container"]
+type = "console"
+encoding.codec = "ndjson"
+
+[sinks.quickwit_logs]
+type = "http"
+inputs = ["generate_im_container"]
+encoding.codec = "ndjson"
+uri = "http://host.docker.internal:7280/api/v1/im_container-logs/ingest"

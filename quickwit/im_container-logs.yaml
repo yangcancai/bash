@@ -1,0 +1,78 @@
+#
+# Index config file for receiving logs in OpenTelemetry format.
+# Link: https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/logs/data-model.md
+#
+#
+#{
+#    "when": "2022-08-13T16:46:53.165746+08:00",
+#    "meta": {
+#        "pid": "<0.1702.0>",
+#        "mfa": "{im_registry_common_receiver,handle,2}",
+#        "line": "213",
+#        "file": "/Users/cam/proj/erlang/im_container/apps/im_registry_common/src/im_registry_common_receiver.erl"
+#    },
+#    "level": "debug",
+#    "timestamp":111,
+#     // 
+#     "action":"cmd或者内部函数名称",
+#     "uid":"当前用户的uid",
+#     // 提出来后剩下的每一行的数据
+#     "body":{},
+#    "msg":{},
+#    "msg_name":"IqReq",
+#    "$sid":"",
+#    "$ip":"",
+#    "service":{}
+#}
+
+version: 0
+
+index_id: im_container-logs
+
+doc_mapping:
+  field_mappings:
+    - name: timestamp
+      type: i64
+      fast: true
+    - name: when
+      type: text
+      tokenizer: default
+    - name: level
+      type: text
+      tokenizer: raw
+      fast: true
+    - name: body
+      type: json
+    - name: meta 
+      type: json
+    - name: action
+      type: text
+      fast: true
+      tokenizer: raw
+    - name: uid
+      type: i64
+      fast: true
+    - name: sid
+      type: text
+      tokenizer: default
+    - name: ip
+      type: text
+      tokenizer: default
+    - name: service
+      type: json
+    - name: msg
+      type: json
+    - name: msg_name
+      type: text
+    - name: file
+      type: text
+    - name: host
+      type: text
+    
+
+indexing_settings:
+  timestamp_field: timestamp
+
+search_settings:
+  default_search_fields: [action, msg, body]
+
