@@ -20,3 +20,4 @@ bin-release/
 erl_crash.dump
 rabbitmq.log
 rabbitmq
+quickwit/qwdata/
