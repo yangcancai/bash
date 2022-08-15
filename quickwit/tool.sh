@@ -4,7 +4,7 @@ install(){
 	docker run --rm -it -v "$(pwd)":"/quickwit/files" --entrypoint sh quickwit/quickwit
 }
 start(){
-	docker run -d --name quickwit -v $(pwd)/qwdata:/quickwit/qwdata -p 127.0.0.1:7280:7280 quickwit/quickwit run
+	docker run -d --name quickwit -v $(pwd)/qwdata:/quickwit/qwdata -p 0.0.0.0:7280:7280 quickwit/quickwit run
 }
 start_vector(){
 	docker run -d --name vector -v /data/mchat/im_container/im_container/log:/data/logs -v $(pwd)/im_container_vector.toml:/etc/vector/vector.toml:ro -p 8383:8383 --add-host=host.docker.internal:host-gateway timberio/vector:0.21.2-distroless-libc

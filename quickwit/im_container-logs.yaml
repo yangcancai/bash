@@ -37,6 +37,7 @@ doc_mapping:
     - name: when
       type: text
       tokenizer: default
+      record: position
     - name: level
       type: text
       tokenizer: raw
@@ -47,6 +48,8 @@ doc_mapping:
       tokenizer: default
     - name: meta 
       type: json
+      record: position
+      tokenizer: default
     - name: action
       type: text
       tokenizer: raw
@@ -70,6 +73,7 @@ doc_mapping:
       type: text
     - name: host
       type: text
+      tokenizer: raw
     
 
 indexing_settings:
