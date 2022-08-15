@@ -43,18 +43,18 @@ doc_mapping:
       fast: true
     - name: body
       type: json
+      record: position
+      tokenizer: default
     - name: meta 
       type: json
     - name: action
       type: text
-      fast: true
       tokenizer: raw
     - name: uid
       type: i64
       fast: true
     - name: sid
       type: text
-      tokenizer: default
     - name: ip
       type: text
       tokenizer: default
@@ -62,6 +62,8 @@ doc_mapping:
       type: json
     - name: msg
       type: json
+      tokenizer: default
+      record: position
     - name: msg_name
       type: text
     - name: file

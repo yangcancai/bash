@@ -1,7 +1,7 @@
 [sources.im_container]
 type = "file"
 #ignore_older_secs = 600
-include = [ "/data/logs/*.json" ]
+include = [ "/data/logs/*.json.*" ]
 read_from = "beginning"
 
 [transforms.generate_im_container]
@@ -11,18 +11,30 @@ source = """
 t=.timestamp
 message = parse_json!(.message)
 .timestamp, err = to_unix_timestamp(t, "milliseconds")
-.sid = message."$sid"
+.sid = message.sid
 .uid = message.uid
 if .uid == null{
 	.uid = 0
+}else{
+	.uid = to_int(.uid)
 }
-.ip = message."$ip"
+.ip = message.ip
 .meta = message.meta
 .when = message.when
 .level = message.level
+msg, err = string(message.msg)
+if err == null{
+.msg = {"unknown": msg}
+}else{
 .msg = message.msg
+}
 .msg_name = message.msg_name
 .service = message.service
+.action = message.action
+if .action==null{
+	.action = "undefined"
+}
+del(message.action)
 del(message."$sid")
 del(message.uid)
 del(message."$ip")

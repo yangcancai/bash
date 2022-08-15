@@ -7,10 +7,11 @@ start(){
 	docker run -d --name quickwit -v $(pwd)/qwdata:/quickwit/qwdata -p 127.0.0.1:7280:7280 quickwit/quickwit run
 }
 start_vector(){
-	docker run -d --name vector -v $(pwd)/im_container_vector.toml:/etc/vector/vector.toml:ro -p 8383:8383 --add-host=host.docker.internal:host-gateway timberio/vector:0.21.2-distroless-libc
+	docker run -d --name vector -v /data/mchat/im_container/im_container/log:/data/logs -v $(pwd)/im_container_vector.toml:/etc/vector/vector.toml:ro -p 8383:8383 --add-host=host.docker.internal:host-gateway timberio/vector:0.21.2-distroless-libc
 }
 console_vector(){
-	docker run --init --rm -v $(pwd)/logs:/data/logs -v $(pwd)/im_container_vector.toml:/etc/vector/vector.toml:ro -p 8383:8383 --add-host=host.docker.internal:host-gateway timberio/vector:0.21.2-distroless-libc
+	#docker run --init --rm -v $(pwd)/logs:/data/logs -v $(pwd)/im_container_vector.toml:/etc/vector/vector.toml:ro -p 8383:8383 --add-host=host.docker.internal:host-gateway timberio/vector:0.21.2-distroless-libc
+	docker run --init --rm -v /Users/cam/proj/erlang/im_container/log:/data/logs -v $(pwd)/im_container_vector.toml:/etc/vector/vector.toml:ro -p 8383:8383 --add-host=host.docker.internal:host-gateway timberio/vector:0.21.2-distroless-libc
 }
 console(){
 	docker run --init --rm -v $(pwd)/qwdata:/quickwit/qwdata -p 127.0.0.1:7280:7280 quickwit/quickwit run
