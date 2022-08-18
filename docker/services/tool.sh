@@ -10,13 +10,19 @@ console(){
     docker-compose up
 }
 redis(){
-    docker exec -it dev_redis_latest bash -c "redis-cli -a 123456" 
+    docker exec -it redis bash -c "redis-cli -a 123456" 
 }
 mysql(){
-    docker exec -it dev_mysql_latest bash -c "mysql -uroot -p"
+    docker exec -it  mysql bash -c "mysql -uroot -p"
+}
+rabbitmq(){
+    docker exec -it rabbitmq bash
 }
 attach_mysql(){
-   docker exec -it dev_mysql_latest bash
+   docker exec -it mysql bash
+}
+log(){
+	docker logs $1
 }
 help(){
     echo "sh tool.sh start --- start all service in background mode"
@@ -32,5 +38,7 @@ stop) stop;;
 console) console;;
 redis) redis;;
 mysql) mysql;;
+rabbitmq) rabbitmq;;
+log) log $2;;
 *) help;;
 esac

@@ -2,7 +2,7 @@ version: "3"
 services:
   mysql:    # 服务的名字
     image: mysql:latest # 使用最新的MySQL镜像
-    container_name: dev_mysql_latest  # 指定一个容器名
+    container_name: 'mysql'# 指定一个容器名
     restart: always # 自动重启（开机后也自动启动）
     network_mode: bridge  # 指定网络为桥接
     volumes:  # 挂载的目录
@@ -25,7 +25,7 @@ services:
 
   redis:
     image: redis:latest
-    container_name: dev_redis_latest
+    container_name: 'redis'
     network_mode: bridge
     restart: always
     ports:
@@ -37,3 +37,19 @@ services:
     command: redis-server /etc/redis/redis.conf 
     # privileged: true
     # command: redis-server --requirepass "123456"  # 指定容器运行的命令，命令处设置密码
+
+  rabbitmq:
+   image: rabbitmq:3-management-alpine
+   container_name: 'rabbitmq'
+   restart: always # 自动重启（开机后也自动启动）
+   ports:
+      - 5672:5672
+      - 15672:15672
+   volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq/
+      - ./log/rabbitmq:/var/log/rabbitmq
+      - ./config/rabbitmq:/etc/rabbitmq
+   environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=123456
+   network_mode: bridge  # 指定网络为桥接
