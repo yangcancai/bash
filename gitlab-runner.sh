@@ -31,6 +31,7 @@ GIT_IP="x.x.x.x"
 
 run(){
 docker run -d --name gitlab-runner --restart always \
+--privileged \
 --add-host $GIT_HOST:$GIT_IP  \
 -e http_proxy=$http_proxy -e https_proxy=$https_proxy \
 -e HTTP_PROXY=$http_proxy -e HTTPS_PROXY=$https_proxy \
@@ -51,6 +52,7 @@ log(){
 }
 register(){
  docker run --rm -it --name gitlab-runner \
+--privileged \
 --add-host $HOST:$GIT_IP  \
 -e http_proxy=$http_proxy -e https_proxy=$https_proxy \
 -e HTTP_PROXY=$http_proxy -e HTTPS_PROXY=$https_proxy \
