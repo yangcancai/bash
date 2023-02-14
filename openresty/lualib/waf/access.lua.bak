@@ -1,0 +1,30 @@
+        local config = require "config"
+        whiteips=config.whiteips
+        blackips=config.blackips
+        whiteurl=config.whiteurl
+        local WAF = require "waf.fw"
+        local fw = WAF:new()
+        local cc = require "antiddos.cc"
+        for k,v in pairs(blackips) do
+            if ngx.var.host == k or k== 'all' then
+                if ngx.var.remote_addr == v then
+                    ngx.exit(444)
+                end
+            end
+        end
+        for k,v in pairs(whiteips) do
+            if ngx.var.host == k or k=='all' then
+                if ngx.var.remote_addr == v then
+                    return
+                end
+            end
+        end
+        for k,v in pairs(whiteurl) do
+            if ngx.var.host == k or k=='all' then
+                if ngx.re.find(ngx.var.request_uri,v) then
+                    return
+                end
+            end
+        end
+        cc.anti_cc()
+        fw:exec()

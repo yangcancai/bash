@@ -1,0 +1,6 @@
+    location ^~ /.well-known/acme-challenge/ {
+        access_log        logs/ssl.log;
+        error_log         logs/ssl.err;
+        #proxy_pass        http://199;
+        include           proxy.conf;
+    }

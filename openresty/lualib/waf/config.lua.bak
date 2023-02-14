@@ -1,0 +1,21 @@
+local _M = {}
+_M.whiteips = {}
+_M.blackips = {}
+
+_M.cc = {
+    secret = "p::nRkc54}hfeI",
+    limit_num = 600,
+    expired_time = 30,
+}
+--黑白名单配置在这里，中括号里写域名，后面写IP
+--_M.whiteips['localhost.com']='127.0.0.1'
+--_M.whiteips['all']='127.0.0.1'
+--_M.blackips["www.baidu.com"]='127.0.0.1'
+--_M.blackips["all"]='127.0.0.1'
+_M.waf = {
+	rulesets = { 10000, 10001, 10002, 10003, 20000, 30000, 40000, 50000, 51000, 60000, 99000 },
+	mode = "ACTIVE",
+    score_threshold = 5,
+    ignored_rules = {},
+}
+return _M
