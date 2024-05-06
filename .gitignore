@@ -9,3 +9,4 @@ erl_crash.dump
 /quickwit/logs/
 /docker/services/data/
 /docker/services/log/
+.DS_Store
