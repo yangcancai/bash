@@ -1,8 +1,8 @@
 version: "3"
 services:
   mysql:    # 服务的名字
-    image: mysql:latest # 使用最新的MySQL镜像
-    container_name: 'mysql'# 指定一个容器名
+    image: mysql:5.7 # 使用最新的MySQL镜像
+    container_name: 'mysql' # 指定一个容器名
     restart: always # 自动重启（开机后也自动启动）
     network_mode: bridge  # 指定网络为桥接
     volumes:  # 挂载的目录
