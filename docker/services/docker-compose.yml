@@ -53,3 +53,16 @@ services:
       - RABBITMQ_DEFAULT_USER=root
       - RABBITMQ_DEFAULT_PASS=123456
    network_mode: bridge  # 指定网络为桥接
+
+  pg:
+    image: postgres:latest
+    container_name: pg 
+    restart: always
+    environment:
+      POSTGRES_USER: postgres 
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: example_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data
